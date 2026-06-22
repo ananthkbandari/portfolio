@@ -1,0 +1,17 @@
+# Normalise line endings: Git stores text as LF in the repo and checks it
+# out using your platform's native endings. This keeps the repo consistent
+# across Windows/macOS/Linux and quiets the "LF will be replaced by CRLF"
+# notices on Windows.
+* text=auto
+
+# Treat these as binary: never alter their bytes, don't diff as text.
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.pdf  binary
+*.glb  binary
+*.gltf binary
+*.woff  binary
+*.woff2 binary

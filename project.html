@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- These two are generic defaults; project.js overwrites them with
+       the real project's title and summary once the data loads. -->
+  <title>Project · Ananth Bandari</title>
+  <meta name="description" content="A mechanical engineering project by Ananth Bandari, with design reasoning, calculations, and downloadable SOLIDWORKS and Ansys files.">
+  <link rel="canonical" href="https://www.ananthbandari.bio/projects.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Ananth Bandari">
+  <meta property="og:title" content="Project · Ananth Bandari">
+  <meta property="og:description" content="Design reasoning, calculations, and downloadable SOLIDWORKS and Ansys files.">
+  <meta property="og:image" content="https://www.ananthbandari.bio/assets/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/favicon.svg">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- ===== KaTeX: maths rendering =====
+       WHY KaTeX (and not MathJax)? KaTeX renders equations instantly and
+       synchronously with no layout "flash", the library is small, and it
+       loads from a free CDN. For the relatively self-contained equations a
+       CAD/FEA portfolio needs, it is the faster, lighter choice. It is only
+       loaded on THIS page (project detail), never on the lighter pages. -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("theme");
+        if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html">
+        <span class="brand__mark" aria-hidden="true">AB</span>
+        <span>Ananth Bandari</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <ul class="nav__links" id="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="resume.html">Résumé</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <button class="icon-btn theme-toggle" type="button" aria-label="Switch theme">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        </button>
+        <button class="icon-btn nav__toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section">
+      <div class="container">
+        <!-- project.js builds the entire detail view inside here, based
+             on the ?slug=... value in the page URL. -->
+        <div id="project-root"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <small>© <span id="year">2026</span> Ananth Bandari · Static site, hosted free on GitHub Pages.</small>
+      <div class="social">
+        <a href="mailto:ananthkbandari@gmail.com" aria-label="Email Ananth">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/ananthbandari" aria-label="LinkedIn profile" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM8.34 9.5H5.67V18h2.67zM7 6.16A1.54 1.54 0 1 0 7 9.24a1.54 1.54 0 0 0 0-3.08zM18.34 18v-4.67c0-2.5-1.34-3.66-3.12-3.66a2.69 2.69 0 0 0-2.44 1.34V9.5h-2.66V18h2.66v-4.5c0-1.19.22-2.34 1.7-2.34s1.47 1.36 1.47 2.42V18z"/></svg>
+        </a>
+        <a href="https://github.com/your-username" aria-label="GitHub profile" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48l-.01-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85l-.01 2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts load in order. KaTeX must come before project.js so the
+       equations can render. model-viewer is NOT loaded here — project.js
+       fetches it on demand, only for projects that include a 3D model. -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/project.js"></script>
+</body>
+</html>

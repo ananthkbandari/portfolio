@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="Ansys von Mises stress contour plot of the steering knuckle">
+  <defs>
+    <!-- A classic blue-to-red FEA stress colour map -->
+    <linearGradient id="stress" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0"    stop-color="#1e3a8a"/>
+      <stop offset="0.25" stop-color="#0ea5e9"/>
+      <stop offset="0.5"  stop-color="#22c55e"/>
+      <stop offset="0.72" stop-color="#eab308"/>
+      <stop offset="0.88" stop-color="#f97316"/>
+      <stop offset="1"    stop-color="#ef4444"/>
+    </linearGradient>
+    <linearGradient id="bar" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0"    stop-color="#1e3a8a"/>
+      <stop offset="0.25" stop-color="#0ea5e9"/>
+      <stop offset="0.5"  stop-color="#22c55e"/>
+      <stop offset="0.72" stop-color="#eab308"/>
+      <stop offset="0.88" stop-color="#f97316"/>
+      <stop offset="1"    stop-color="#ef4444"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="640" height="400" fill="#0b1120"/>
+
+  <!-- Same upright outline, filled with the stress map -->
+  <g stroke="#0b1120" stroke-width="2" stroke-linejoin="round">
+    <path d="M250 120 L300 100 L360 130 L372 200 L400 250 L372 300 L300 300 L250 270 L240 200 Z" fill="url(#stress)"/>
+    <path d="M250 120 L180 95 L168 130 L240 165 Z" fill="url(#stress)"/>
+  </g>
+  <!-- Hot spot near the lower caliper lug -->
+  <circle cx="368" cy="262" r="16" fill="#ef4444"/>
+  <circle cx="312" cy="205" r="44" fill="#0b1120" stroke="#334155" stroke-width="2"/>
+
+  <!-- Colour bar -->
+  <g font-family="system-ui, sans-serif" font-size="12" fill="#cbd5e1">
+    <rect x="560" y="70" width="24" height="240" rx="3" fill="url(#bar)" stroke="#334155"/>
+    <text x="592" y="78">78 MPa</text>
+    <text x="592" y="194">39</text>
+    <text x="592" y="312">0</text>
+    <text x="560" y="56" font-weight="700" fill="#e2e8f0">von Mises</text>
+  </g>
+
+  <!-- Label chip -->
+  <g font-family="system-ui, 'Segoe UI', sans-serif">
+    <rect x="24" y="338" width="330" height="38" rx="8" fill="#000000" opacity="0.55"/>
+    <text x="40" y="362" fill="#ffffff" font-size="16" font-weight="700">Ansys — Static Structural (1.5 g corner)</text>
+  </g>
+</svg>

@@ -1,0 +1,723 @@
+/* =================================================================
+   styles.css  —  the single stylesheet for the whole site
+   -----------------------------------------------------------------
+   How this file is organised (skim the headings to find things):
+     1. Design tokens (CSS variables: colours, spacing, type)
+     2. Dark-theme token overrides
+     3. Base / reset
+     4. Layout helpers (container, section, grid)
+     5. Header & navigation
+     6. Buttons, tags, badges
+     7. Cards (project gallery)
+     8. Home / About
+     9. Project detail page
+    10. Resume page
+    11. Contact page
+    12. Footer
+    13. Lightbox (image zoom)
+    14. Utilities & accessibility
+    15. Responsive tweaks
+
+   WHY CSS VARIABLES?  Every colour and size lives in one place at the
+   top (":root"). Change a value there and it updates everywhere. The
+   dark theme simply re-defines those same variables, so we never have
+   to write two copies of every rule.
+   ================================================================= */
+
+/* ---------- 1. DESIGN TOKENS -------------------------------------
+   Colour system (light theme):
+   A calm, professional "engineering paper + blueprint" palette.
+   - Neutrals are cool greys (slate) so the site reads as precise and
+     technical rather than warm/playful.
+   - A single blue accent does all the "interactive" work (links,
+     buttons, focus rings). One accent keeps the design disciplined.
+   Type system:
+   - A native system-font stack. It looks great on every OS, loads
+     instantly (zero network requests), and never blocks rendering.
+     This directly serves the "fast loading / minimal dependencies"
+     goal. If you later want a branded font, self-host it and swap the
+     --font-sans value.
+------------------------------------------------------------------ */
+:root {
+  /* Brand / accent */
+  --accent:        #2563eb;   /* blue-600  — primary actions, links */
+  --accent-hover:  #1d4ed8;   /* blue-700  — hover/active */
+  --accent-soft:   #eff6ff;   /* blue-50   — tinted backgrounds */
+  --accent-ring:   rgba(37, 99, 235, 0.40); /* focus outline colour */
+
+  /* Neutrals (slate) */
+  --bg:            #ffffff;    /* page background */
+  --bg-subtle:     #f8fafc;    /* alternating sections, code areas */
+  --surface:       #ffffff;    /* cards, header */
+  --surface-2:     #f1f5f9;    /* chips, secondary surfaces */
+  --ink:           #0f172a;    /* primary text (slate-900) */
+  --ink-soft:      #334155;    /* body text (slate-700) */
+  --muted:         #64748b;    /* secondary text (slate-500) */
+  --border:        #e2e8f0;    /* hairline borders (slate-200) */
+  --border-strong: #cbd5e1;    /* slate-300 */
+
+  /* Status colour used for the "SOLIDWORKS / Ansys" download groups */
+  --solidworks:    #c2410c;    /* warm orange-ish, nods to SW branding */
+  --ansys:         #b45309;    /* amber, nods to Ansys branding */
+  --other:         #475569;    /* neutral slate */
+
+  /* Spacing scale (rem). Consistent rhythm across the whole site. */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  /* Shape & depth */
+  --radius:    12px;
+  --radius-sm: 8px;
+  --radius-lg: 18px;
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 4px 16px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 12px 40px rgba(15, 23, 42, 0.14);
+
+  /* Typography */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+               Arial, "Noto Sans", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+               "Liberation Mono", monospace;
+
+  --maxw:      1120px;   /* overall page width */
+  --maxw-prose: 70ch;    /* comfortable reading measure for long text */
+
+  color-scheme: light;
+}
+
+/* ---------- 2. DARK THEME ----------------------------------------
+   We support dark mode two ways:
+   (a) Automatically, if the visitor's device prefers dark, AND
+   (b) Manually, via the moon/sun toggle in the header, which sets
+       data-theme="dark" or "light" on <html> and saves the choice.
+   Both routes just re-point the same variables below. Because the
+   manual toggle uses data-theme, it always wins over the OS setting.
+------------------------------------------------------------------ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --accent:        #60a5fa;  /* blue-400, brighter for dark bg */
+    --accent-hover:  #93c5fd;
+    --accent-soft:   #172554;
+    --accent-ring:   rgba(96, 165, 250, 0.45);
+
+    --bg:            #0b1120;
+    --bg-subtle:     #0f172a;
+    --surface:       #111c33;
+    --surface-2:     #1e293b;
+    --ink:           #e8eef9;
+    --ink-soft:      #cbd5e1;
+    --muted:         #94a3b8;
+    --border:        #233047;
+    --border-strong: #334155;
+
+    --solidworks:    #fb923c;
+    --ansys:         #fbbf24;
+    --other:         #94a3b8;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.6);
+
+    color-scheme: dark;
+  }
+}
+
+/* Manual override: when the user clicks the toggle, <html data-theme="dark"> */
+:root[data-theme="dark"] {
+  --accent:        #60a5fa;
+  --accent-hover:  #93c5fd;
+  --accent-soft:   #172554;
+  --accent-ring:   rgba(96, 165, 250, 0.45);
+
+  --bg:            #0b1120;
+  --bg-subtle:     #0f172a;
+  --surface:       #111c33;
+  --surface-2:     #1e293b;
+  --ink:           #e8eef9;
+  --ink-soft:      #cbd5e1;
+  --muted:         #94a3b8;
+  --border:        #233047;
+  --border-strong: #334155;
+
+  --solidworks:    #fb923c;
+  --ansys:         #fbbf24;
+  --other:         #94a3b8;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.6);
+
+  color-scheme: dark;
+}
+
+/* ---------- 3. BASE / RESET -------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Respect users who ask for less motion (accessibility). */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink-soft);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* Fade the page in once CSS is ready (set by main.js adding .ready). */
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+h1, h2, h3, h4 {
+  color: var(--ink);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  margin: 0 0 var(--space-4);
+  font-weight: 700;
+}
+h1 { font-size: clamp(2rem, 5vw, 3rem); }
+h2 { font-size: clamp(1.5rem, 3.5vw, 2rem); }
+h3 { font-size: 1.25rem; }
+
+p  { margin: 0 0 var(--space-4); }
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+a:hover { color: var(--accent-hover); text-decoration: underline; }
+
+img, svg, model-viewer { max-width: 100%; display: block; }
+
+ul, ol { margin: 0 0 var(--space-4); padding-left: 1.25rem; }
+li { margin-bottom: var(--space-2); }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: var(--space-6) 0;
+}
+
+code, kbd {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--surface-2);
+  padding: 0.1em 0.4em;
+  border-radius: 6px;
+}
+
+/* ---------- 4. LAYOUT HELPERS ------------------------------------ */
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+}
+
+/* A vertical-rhythm section. Alternate background with .section--subtle */
+.section { padding-block: var(--space-8); }
+.section--subtle { background: var(--bg-subtle); }
+
+.section__head {
+  max-width: var(--maxw-prose);
+  margin-bottom: var(--space-6);
+}
+.section__head .eyebrow { margin-bottom: var(--space-2); }
+.section__head p { color: var(--muted); font-size: 1.05rem; }
+
+/* Small uppercase label above a heading */
+.eyebrow {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0;
+}
+
+/* Responsive auto-fill grid used by the project gallery */
+.grid {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+}
+
+/* ---------- 5. HEADER & NAVIGATION ------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: saturate(140%) blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-height: 64px;
+}
+
+/* Wordmark / logo */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  font-size: 1.05rem;
+}
+.brand:hover { text-decoration: none; color: var(--ink); }
+.brand__mark {
+  display: grid;
+  place-items: center;
+  width: 34px; height: 34px;
+  border-radius: 9px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+/* The nav links + controls cluster */
+.nav { display: flex; align-items: center; gap: var(--space-2); }
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  list-style: none;
+  margin: 0; padding: 0;
+}
+.nav__links a {
+  display: inline-block;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  color: var(--ink-soft);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.nav__links a:hover { background: var(--surface-2); color: var(--ink); text-decoration: none; }
+/* The JS in main.js adds aria-current="page" to the active link */
+.nav__links a[aria-current="page"] { color: var(--accent); background: var(--accent-soft); }
+
+/* Icon buttons (theme toggle, hamburger) */
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 40px; height: 40px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+.icon-btn:hover { background: var(--surface-2); }
+.icon-btn svg { width: 20px; height: 20px; }
+
+/* Theme toggle shows one icon at a time depending on the theme */
+.theme-toggle .icon-sun  { display: none; }
+:root[data-theme="dark"] .theme-toggle .icon-sun  { display: block; }
+:root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle .icon-sun  { display: block; }
+  :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: none; }
+}
+
+/* Hamburger only appears on small screens (see responsive section) */
+.nav__toggle { display: none; }
+
+/* ---------- 6. BUTTONS, TAGS, BADGES ----------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.7rem 1.1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.05s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+  text-decoration: none;
+  line-height: 1.2;
+}
+.btn:hover { text-decoration: none; }
+.btn:active { transform: translateY(1px); }
+
+.btn--primary { background: var(--accent); color: #fff; box-shadow: var(--shadow-sm); }
+.btn--primary:hover { background: var(--accent-hover); color: #fff; }
+
+.btn--ghost { background: transparent; color: var(--ink); border-color: var(--border-strong); }
+.btn--ghost:hover { background: var(--surface-2); color: var(--ink); }
+
+.btn--block { width: 100%; justify-content: flex-start; }
+.btn svg { width: 18px; height: 18px; flex: none; }
+
+/* Tag chips used on cards and detail pages */
+.tags { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; margin: 0; padding: 0; }
+.tag {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.tag--accent { color: var(--accent); background: var(--accent-soft); border-color: transparent; }
+
+/* ---------- 7. CARDS (project gallery) --------------------------- */
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-strong);
+}
+/* The whole card is a link; this makes the title look like a heading */
+.card a { color: inherit; }
+.card a:hover { text-decoration: none; }
+
+.card__media {
+  aspect-ratio: 16 / 10;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.card__media img { width: 100%; height: 100%; object-fit: cover; }
+
+.card__body { padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-3); flex: 1; }
+.card__title { font-size: 1.15rem; margin: 0; }
+.card__summary { color: var(--muted); font-size: 0.95rem; margin: 0; flex: 1; }
+.card__footer { margin-top: var(--space-2); }
+
+/* ---------- 8. HOME / ABOUT -------------------------------------- */
+.hero { padding-block: var(--space-9) var(--space-8); }
+.hero__grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--space-8);
+  align-items: center;
+}
+.hero h1 { margin-bottom: var(--space-4); }
+.hero__lead { font-size: 1.2rem; color: var(--ink-soft); max-width: 52ch; }
+.hero__cta { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-5); }
+
+/* Portrait / monogram block on the right of the hero */
+.hero__portrait {
+  aspect-ratio: 1;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+.hero__portrait img { width: 100%; height: 100%; object-fit: cover; }
+
+/* "At a glance" fact strip */
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--space-4); }
+.fact {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-5);
+}
+.fact dt { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: var(--space-1); }
+.fact dd { margin: 0; font-weight: 700; color: var(--ink); font-size: 1.05rem; }
+
+/* Skill pill groups on the About area */
+.skills { display: grid; gap: var(--space-5); }
+.skill-group h3 { font-size: 1rem; margin-bottom: var(--space-3); color: var(--ink); }
+
+/* ---------- 9. PROJECT DETAIL PAGE ------------------------------- */
+.detail__back { display: inline-flex; align-items: center; gap: var(--space-2); color: var(--muted); font-weight: 600; margin-bottom: var(--space-5); }
+
+.detail__header { max-width: var(--maxw-prose); }
+.detail__meta { display: flex; flex-wrap: wrap; gap: var(--space-4); color: var(--muted); font-size: 0.92rem; margin-bottom: var(--space-4); }
+.detail__meta span { display: inline-flex; align-items: center; gap: var(--space-2); }
+
+/* Two-column layout: content on the left, sticky downloads on the right */
+.detail__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: var(--space-7);
+  align-items: start;
+  margin-top: var(--space-6);
+}
+.detail__content { min-width: 0; }      /* min-width:0 lets long equations scroll instead of overflowing */
+.detail__content > section { margin-bottom: var(--space-7); }
+.detail__content h2 { padding-bottom: var(--space-2); border-bottom: 1px solid var(--border); }
+.prose { max-width: var(--maxw-prose); }
+.prose p { color: var(--ink-soft); }
+
+/* Design-decision list: a "decision -> why" pattern */
+.decisions { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-4); }
+.decisions li {
+  margin: 0;
+  padding: var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+}
+.decisions .decision { font-weight: 700; color: var(--ink); display: block; margin-bottom: var(--space-2); }
+.decisions .rationale { color: var(--ink-soft); margin: 0; }
+
+/* Calculation blocks (KaTeX renders inside .calc__eq / .calc__result) */
+.calc {
+  padding: var(--space-5);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: var(--space-4);
+}
+.calc__title { font-size: 1.05rem; margin-bottom: var(--space-2); }
+.calc__desc { color: var(--ink-soft); margin-bottom: var(--space-3); }
+/* Equations can be wide; let them scroll horizontally on small screens */
+.calc__eq, .calc__result {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: var(--space-3) 0;
+}
+.calc__result {
+  border-top: 1px dashed var(--border-strong);
+  margin-top: var(--space-2);
+}
+.calc__note { font-size: 0.9rem; color: var(--muted); margin: var(--space-2) 0 0; }
+
+/* Image gallery on the detail page */
+.gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-4); }
+.gallery figure { margin: 0; }
+.gallery img {
+  width: 100%;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  cursor: zoom-in;
+  background: var(--surface-2);
+}
+.gallery figcaption { font-size: 0.88rem; color: var(--muted); margin-top: var(--space-2); }
+
+/* 3D viewer */
+model-viewer {
+  width: 100%;
+  height: 420px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  --poster-color: transparent;
+}
+
+/* Sticky downloads sidebar */
+.downloads { position: sticky; top: 84px; }
+.downloads__card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-sm);
+}
+.downloads__card h2 { font-size: 1.1rem; border: none; padding: 0; margin-bottom: var(--space-2); }
+.downloads__group { margin-top: var(--space-4); }
+.downloads__group-label {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+  margin-bottom: var(--space-2);
+}
+.downloads__group-label .dot { width: 9px; height: 9px; border-radius: 50%; }
+.downloads__group--solidworks .dot { background: var(--solidworks); }
+.downloads__group--solidworks .downloads__group-label { color: var(--solidworks); }
+.downloads__group--ansys .dot { background: var(--ansys); }
+.downloads__group--ansys .downloads__group-label { color: var(--ansys); }
+.downloads__group--other .dot { background: var(--other); }
+.downloads__group--other .downloads__group-label { color: var(--other); }
+
+/* One download button */
+.dl {
+  display: flex; align-items: center; gap: var(--space-3);
+  width: 100%;
+  text-align: left;
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  margin-bottom: var(--space-2);
+}
+.dl:hover { border-color: var(--accent); background: var(--accent-soft); text-decoration: none; color: var(--ink); }
+.dl__icon { flex: none; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 8px; background: var(--surface-2); }
+.dl__icon svg { width: 18px; height: 18px; }
+.dl__text { min-width: 0; }
+.dl__label { display: block; font-weight: 600; font-size: 0.9rem; line-height: 1.3; overflow-wrap: anywhere; }
+.dl__size { display: block; font-size: 0.8rem; color: var(--muted); }
+
+/* ---------- 10. RESUME PAGE -------------------------------------- */
+.resume__head { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; justify-content: space-between; }
+.resume-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-6); }
+.entry { margin-bottom: var(--space-5); }
+.entry__row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-2); }
+.entry__title { font-weight: 700; color: var(--ink); }
+.entry__meta { color: var(--muted); font-size: 0.92rem; }
+.entry__sub { color: var(--ink-soft); font-style: italic; margin-bottom: var(--space-2); }
+
+/* ---------- 11. CONTACT PAGE ------------------------------------- */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-7); align-items: start; }
+.contact-list { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-3); }
+.contact-list a, .contact-list span { display: inline-flex; align-items: center; gap: var(--space-3); }
+.contact-list svg { width: 20px; height: 20px; color: var(--accent); flex: none; }
+
+/* Optional contact form (Formspree). Hidden by default until you set it up. */
+.form-field { display: grid; gap: var(--space-2); margin-bottom: var(--space-4); }
+.form-field label { font-weight: 600; color: var(--ink); font-size: 0.95rem; }
+.form-field input, .form-field textarea {
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  font: inherit;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+}
+.form-field input:focus, .form-field textarea:focus {
+  outline: 3px solid var(--accent-ring);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+
+/* ---------- 12. FOOTER ------------------------------------------- */
+.site-footer {
+  border-top: 1px solid var(--border);
+  background: var(--bg-subtle);
+  margin-top: var(--space-9);
+  padding-block: var(--space-7);
+}
+.site-footer__inner { display: flex; flex-wrap: wrap; gap: var(--space-4); justify-content: space-between; align-items: center; }
+.site-footer small { color: var(--muted); }
+.site-footer .social { display: flex; gap: var(--space-3); }
+.site-footer .social a { color: var(--muted); }
+.site-footer .social a:hover { color: var(--accent); }
+.site-footer .social svg { width: 22px; height: 22px; }
+
+/* ---------- 13. LIGHTBOX (image zoom) ---------------------------- */
+.lightbox {
+  position: fixed; inset: 0; z-index: 100;
+  display: none;
+  place-items: center;
+  padding: var(--space-5);
+  background: rgba(2, 6, 23, 0.82);
+  backdrop-filter: blur(2px);
+}
+.lightbox[open], .lightbox.is-open { display: grid; }
+.lightbox img { max-width: 92vw; max-height: 86vh; border-radius: var(--radius); box-shadow: var(--shadow-lg); }
+.lightbox__close {
+  position: absolute; top: var(--space-5); right: var(--space-5);
+  width: 44px; height: 44px;
+  border: none; border-radius: 50%;
+  background: rgba(255,255,255,0.12); color: #fff;
+  font-size: 1.5rem; cursor: pointer;
+}
+.lightbox__close:hover { background: rgba(255,255,255,0.25); }
+
+/* ---------- 14. UTILITIES & ACCESSIBILITY ------------------------ */
+/* Visually hidden but available to screen readers */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* "Skip to content" link — appears when keyboard-focused */
+.skip-link {
+  position: absolute; left: var(--space-4); top: -60px;
+  z-index: 200;
+  background: var(--accent); color: #fff;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  transition: top 0.15s ease;
+}
+.skip-link:focus { top: var(--space-4); text-decoration: none; }
+
+/* A single, consistent, highly-visible focus ring everywhere.
+   Using :focus-visible means it only shows for keyboard users, not
+   on mouse clicks — best of both worlds. */
+:focus-visible {
+  outline: 3px solid var(--accent-ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.text-muted { color: var(--muted); }
+.center { text-align: center; }
+.mt-0 { margin-top: 0; }
+.stack > * + * { margin-top: var(--space-4); }
+
+/* Loading / empty / error states for JS-rendered areas */
+.state {
+  text-align: center;
+  padding: var(--space-8) var(--space-5);
+  color: var(--muted);
+}
+.state--error { color: var(--ink-soft); }
+
+/* ---------- 15. RESPONSIVE --------------------------------------- */
+@media (max-width: 880px) {
+  .hero__grid { grid-template-columns: 1fr; }
+  .hero__portrait { max-width: 320px; order: -1; }   /* portrait first on mobile */
+  .detail__layout { grid-template-columns: 1fr; }
+  .downloads { position: static; }
+  .contact-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 720px) {
+  /* Turn the nav links into a slide-down panel toggled by the hamburger. */
+  .nav__toggle { display: inline-grid; }
+
+  .nav__links {
+    position: absolute;
+    top: 64px; left: 0; right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-1);
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-md);
+    padding: var(--space-3);
+    /* Hidden until JS toggles .is-open (and aria-expanded on the button). */
+    display: none;
+  }
+  .nav__links.is-open { display: flex; }
+  .nav__links a { padding: var(--space-3); }
+}

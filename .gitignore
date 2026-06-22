@@ -1,0 +1,75 @@
+# =================================================================
+# .gitignore  —  what Git should NEVER track
+# -----------------------------------------------------------------
+# The golden rule for this project: large CAD/FEA source files do NOT
+# live in this repository. They go to GitHub Releases or Cloudflare R2,
+# and the site links to them by URL (see the README). The patterns
+# below are a safety net so a giant file can't be committed by accident.
+# =================================================================
+
+# ---- Large engineering source files (host these externally!) ----
+*.SLDPRT
+*.SLDASM
+*.SLDDRW
+*.sldprt
+*.sldasm
+*.slddrw
+*.step
+*.stp
+*.iges
+*.igs
+*.x_t
+*.x_b
+*.prt
+*.asm
+*.catpart
+*.catproduct
+
+# ---- Ansys / simulation archives & junk ----
+*.wbpz
+*.wbpj
+*_files/
+*.mechdat
+*.mechdb
+*.cdb
+*.rst
+*.rth
+*.db
+*.dbb
+*.err
+*.out
+
+# ---- Big media that should be optimised/hosted elsewhere ----
+*.zip
+*.rar
+*.7z
+*.mp4
+*.mov
+
+# ---- iCloud / OS / editor cruft ----
+.DS_Store
+.AppleDouble
+Icon?
+*.icloud
+Thumbs.db
+ehthumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*~
+
+# ---- Node (only if you ever add build tooling; not needed now) ----
+node_modules/
+npm-debug.log*
+
+# ---- Claude Code personal/local settings (don't publish these) ----
+.claude/settings.local.json
+
+# -----------------------------------------------------------------
+# NOTE: small files that SHOULD be tracked and are intentionally NOT
+# ignored: your optimised images in assets/img/, the resume PDF in
+# assets/resume/, the favicon, and all HTML/CSS/JS/JSON.
+# If you ever need to keep a sample model in the repo for the 3D viewer,
+# use a small .glb and force-add it:  git add -f assets/models/demo.glb
+# =================================================================

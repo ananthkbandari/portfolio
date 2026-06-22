@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" role="img" aria-label="Portrait placeholder for Ananth Bandari">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eef2f7"/>
+      <stop offset="1" stop-color="#dbe3ee"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2563eb"/>
+      <stop offset="1" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#c8d3e3" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="480" height="480" fill="url(#bg)"/>
+  <rect width="480" height="480" fill="url(#grid)" opacity="0.5"/>
+
+  <!-- Monogram disc -->
+  <circle cx="240" cy="210" r="118" fill="url(#ring)"/>
+  <circle cx="240" cy="210" r="118" fill="none" stroke="#ffffff" stroke-opacity="0.35" stroke-width="3"/>
+  <text x="240" y="250" text-anchor="middle"
+        font-family="system-ui, 'Segoe UI', Roboto, sans-serif"
+        font-size="96" font-weight="800" fill="#ffffff" letter-spacing="-3">AB</text>
+
+  <text x="240" y="408" text-anchor="middle"
+        font-family="system-ui, 'Segoe UI', Roboto, sans-serif"
+        font-size="22" font-weight="700" fill="#334155">Ananth Bandari</text>
+  <text x="240" y="436" text-anchor="middle"
+        font-family="system-ui, 'Segoe UI', Roboto, sans-serif"
+        font-size="14" fill="#64748b">Replace with your photo (square crop works best)</text>
+</svg>

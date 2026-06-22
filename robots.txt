@@ -1,0 +1,6 @@
+# Allow all search engines to index the whole site.
+User-agent: *
+Allow: /
+
+# Point crawlers at the sitemap.
+Sitemap: https://www.ananthbandari.bio/sitemap.xml

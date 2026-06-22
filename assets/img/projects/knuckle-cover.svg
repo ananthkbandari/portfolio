@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="Technical illustration of a go-kart steering knuckle">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f3f6fb"/>
+      <stop offset="1" stop-color="#e2e8f2"/>
+    </linearGradient>
+    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9fb2cc"/>
+      <stop offset="0.5" stop-color="#c7d3e6"/>
+      <stop offset="1" stop-color="#8497b5"/>
+    </linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#c9d5e8" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="640" height="400" fill="url(#bg)"/>
+  <rect width="640" height="400" fill="url(#grid)" opacity="0.6"/>
+
+  <!-- Stylised upright: bearing boss + steering arm + two caliper lugs + stiffening rib -->
+  <g stroke="#5b6b87" stroke-width="2.5" stroke-linejoin="round">
+    <path d="M250 120
+             L300 100 L360 130 L372 200
+             L400 250 L372 300 L300 300
+             L250 270 L240 200 Z"
+          fill="url(#metal)"/>
+    <!-- stiffening rib -->
+    <path d="M300 150 L335 235" fill="none" stroke-dasharray="0"/>
+    <!-- steering arm -->
+    <path d="M250 120 L180 95 L168 130 L240 165 Z" fill="url(#metal)"/>
+  </g>
+
+  <!-- Bearing bore + caliper holes -->
+  <circle cx="312" cy="205" r="46" fill="#eef3fb" stroke="#5b6b87" stroke-width="2.5"/>
+  <circle cx="312" cy="205" r="22" fill="#cdd9ec" stroke="#5b6b87" stroke-width="2"/>
+  <circle cx="186" cy="113" r="9" fill="#eef3fb" stroke="#5b6b87" stroke-width="2"/>
+  <circle cx="368" cy="262" r="9" fill="#eef3fb" stroke="#5b6b87" stroke-width="2"/>
+  <circle cx="300" cy="290" r="9" fill="#eef3fb" stroke="#5b6b87" stroke-width="2"/>
+
+  <!-- Dimension line on the bore -->
+  <g stroke="#2563eb" stroke-width="1.5" fill="#2563eb" font-family="system-ui, sans-serif" font-size="14">
+    <line x1="266" y1="205" x2="358" y2="205" stroke-dasharray="4 3"/>
+    <path d="M266 205l8-4v8z"/><path d="M358 205l-8-4v8z"/>
+    <text x="312" y="196" text-anchor="middle">&#216; bearing bore</text>
+  </g>
+
+  <!-- Label chip -->
+  <g font-family="system-ui, 'Segoe UI', sans-serif">
+    <rect x="24" y="338" width="300" height="38" rx="8" fill="#0f172a" opacity="0.86"/>
+    <text x="40" y="362" fill="#ffffff" font-size="16" font-weight="700">Go-Kart Steering Knuckle</text>
+    <rect x="470" y="22" width="146" height="28" rx="14" fill="#2563eb"/>
+    <text x="543" y="41" fill="#ffffff" font-size="13" font-weight="700" text-anchor="middle">SAMPLE RENDER</text>
+  </g>
+</svg>

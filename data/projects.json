@@ -1,0 +1,172 @@
+{
+  "_comment": "THIS IS YOUR PROJECT DATABASE. To add a project, copy one { ... } block, paste it at the top of the list, and edit the values. Every backslash in a LaTeX equation must be doubled (\\frac not \frac) because this is a JSON file. See the README section 'Add a new project' for the full routine.",
+  "projects": [
+    {
+      "title": "Go-Kart Front Upright & Steering Knuckle",
+      "slug": "go-kart-steering-knuckle",
+      "summary": "A lightweight aluminium upright that carries the front wheel bearing, brake caliper and steering tie-rod for a 90 kg sprint kart. Designed in SOLIDWORKS and validated with an Ansys static-structural study of the worst-case cornering and braking loads.",
+      "cover": "assets/img/projects/knuckle-cover.svg",
+      "tags": ["SOLIDWORKS", "Ansys", "Static Structural", "Aluminium 6061-T6", "FEA"],
+      "tools": ["SOLIDWORKS 2024", "Ansys Mechanical 2024 R1"],
+      "role": "Design + FEA validation",
+      "date": "2024",
+      "designLogic": [
+        "The upright is the part that ties the spinning wheel to the steering and the chassis, so it has to react three load paths at once: the vertical and lateral tyre forces through the bearing, the braking torque reacted at the caliper lugs, and the steering force through the tie-rod arm. I started from the fixed geometry I could not change — the bearing bore diameter, the king-pin axis location and the caliper mounting pitch — and grew material outward from those features only where a load path demanded it.",
+        "Because a kart upright is unsprung mass at the very end of the steering, every gram costs handling response. The goal was therefore the lightest part that still keeps a comfortable safety factor against yield, rather than the strongest possible part."
+      ],
+      "designDecisions": [
+        {
+          "decision": "Machined 6061-T6 billet instead of a steel weldment.",
+          "rationale": "6061-T6 gives roughly a third of the density of steel for a third of the stiffness, so a thicker aluminium section can match a thin steel one at far lower mass. It is also fully machinable on a 3-axis mill, which suited the workshop available."
+        },
+        {
+          "decision": "Generous radii at every internal corner (minimum 3 mm).",
+          "rationale": "The first FEA pass showed stress peaks at sharp re-entrant corners around the caliper lugs. Adding fillets spread those peaks out and raised the fatigue life with almost no weight penalty."
+        },
+        {
+          "decision": "A triangulated rib between the bearing boss and the steering arm.",
+          "rationale": "The steering load tries to twist the arm relative to the bearing boss. A single diagonal rib turns that bending path into a much stiffer tension/compression path, which cut the peak deflection by about 40% for only a few grams."
+        }
+      ],
+      "calculations": [
+        {
+          "title": "Worst-case cornering load at the contact patch",
+          "description": "I sized the part for a 1.5 g steady-state corner, where m is the front-axle share of the kart-plus-driver mass and a is the lateral acceleration.",
+          "equation": "F_{lat} = m\\,a = m\\,(1.5\\,g)",
+          "result": "F_{lat} = 90\\ \\text{kg} \\times 1.5 \\times 9.81\\ \\tfrac{\\text{m}}{\\text{s}^2} \\approx 1.32\\ \\text{kN}",
+          "note": "This lateral force, applied at the contact patch and reacted at the two wheel bearings, is the primary load case driving the FEA."
+        },
+        {
+          "title": "Von Mises stress and factor of safety",
+          "description": "Ansys reports the equivalent (von Mises) stress, which I compare against the yield strength of 6061-T6 to get the factor of safety (FOS).",
+          "equation": "\\sigma_{vm} = \\sqrt{\\tfrac{1}{2}\\left[(\\sigma_1-\\sigma_2)^2 + (\\sigma_2-\\sigma_3)^2 + (\\sigma_3-\\sigma_1)^2\\right]}",
+          "result": "\\text{FOS} = \\dfrac{\\sigma_{y}}{\\sigma_{vm,\\max}} = \\dfrac{276\\ \\text{MPa}}{78\\ \\text{MPa}} \\approx 3.5",
+          "note": "A peak of 78 MPa against the 276 MPa yield of 6061-T6 gives a factor of safety of 3.5 — comfortable for a part that also sees fatigue and the occasional kerb strike."
+        }
+      ],
+      "images": [
+        {
+          "src": "assets/img/projects/knuckle-cover.svg",
+          "alt": "Isometric render of the machined aluminium go-kart steering knuckle showing the bearing boss, caliper lugs and steering arm.",
+          "caption": "Isometric render of the final upright. The triangulated rib between the bearing boss and steering arm is the key stiffening feature."
+        },
+        {
+          "src": "assets/img/projects/knuckle-fea.svg",
+          "alt": "Ansys von Mises stress contour plot of the steering knuckle under the cornering load case, with the highest stress near the lower caliper lug.",
+          "caption": "Ansys von Mises contour for the 1.5 g cornering case. Peak stress of 78 MPa sits at the lower caliper lug, well below yield."
+        }
+      ],
+      "model": "",
+      "files": [
+        {
+          "label": "Steering knuckle — SOLIDWORKS part (.SLDPRT)",
+          "category": "SOLIDWORKS",
+          "size": "4.2 MB",
+          "url": "https://github.com/REPLACE_ME/REPLACE_ME/releases/download/v1.0/go-kart-knuckle.SLDPRT"
+        },
+        {
+          "label": "Front upright — SOLIDWORKS assembly (.SLDASM)",
+          "category": "SOLIDWORKS",
+          "size": "11.8 MB",
+          "url": "https://github.com/REPLACE_ME/REPLACE_ME/releases/download/v1.0/front-upright-assembly.zip"
+        },
+        {
+          "label": "Static structural study — Ansys archive (.wbpz)",
+          "category": "Ansys",
+          "size": "58 MB",
+          "url": "https://github.com/REPLACE_ME/REPLACE_ME/releases/download/v1.0/go-kart-knuckle-static.wbpz"
+        },
+        {
+          "label": "Engineering drawing (.PDF)",
+          "category": "other",
+          "size": "320 KB",
+          "url": "https://github.com/REPLACE_ME/REPLACE_ME/releases/download/v1.0/go-kart-knuckle-drawing.pdf"
+        }
+      ]
+    },
+    {
+      "title": "Quadcopter Arm — Topology Optimisation & Modal Analysis",
+      "slug": "quadcopter-arm-topology",
+      "summary": "A carbon-reinforced quadcopter arm reduced to its lightest viable form with Ansys topology optimisation, then checked with a modal study to make sure no natural frequency sits near the propeller passing frequency. Modelled in SOLIDWORKS from the optimised result.",
+      "cover": "assets/img/projects/arm-cover.svg",
+      "tags": ["SOLIDWORKS", "Ansys", "Topology Optimisation", "Modal Analysis", "Lightweighting"],
+      "tools": ["SOLIDWORKS 2024", "Ansys Mechanical 2024 R1"],
+      "role": "Design + optimisation + FEA",
+      "date": "2024",
+      "designLogic": [
+        "A multirotor arm holds a motor at its tip and bolts to the central hub at its root, so under thrust it behaves like a cantilever beam. The two things that kill an arm are static failure at the root, where the bending moment is highest, and resonance, where a natural frequency lines up with the vibration coming off the spinning propeller. The design has to win on both at once.",
+        "I let Ansys topology optimisation decide where the material wanted to be: I defined the keep-out regions (the motor mount, the bolt holes, the bounding envelope), set a mass target, and let the solver remove everything that was not carrying load. I then rebuilt that organic result as clean, manufacturable geometry in SOLIDWORKS."
+      ],
+      "designDecisions": [
+        {
+          "decision": "Hollow, tapered box section rather than a solid arm.",
+          "rationale": "Bending stress is highest at the outer fibres, so material on the neutral axis does little. A hollow section puts the material where it works and the taper follows the falling bending moment from root to tip."
+        },
+        {
+          "decision": "Targeted a 35% mass reduction, not the absolute minimum.",
+          "rationale": "Pushing the optimiser to the limit produced spindly features that were impossible to mould and dropped the first natural frequency into the danger zone. Backing off to 35% kept the part both manufacturable and well clear of resonance."
+        },
+        {
+          "decision": "First natural frequency pushed above 90 Hz.",
+          "rationale": "The propeller passing frequency at full throttle is about 60 Hz. Keeping the first mode above 90 Hz leaves a healthy 50% separation so the arm never sits on a resonance during normal flight."
+        }
+      ],
+      "calculations": [
+        {
+          "title": "Thrust load case at the motor mount",
+          "description": "Each arm is sized for 2.5x the hover thrust of a single motor to cover aggressive manoeuvres and a safety margin.",
+          "equation": "F_{tip} = n\\,T_{hover} = 2.5 \\times 12\\ \\text{N}",
+          "result": "F_{tip} = 30\\ \\text{N}\\ \\text{applied at the motor mount}",
+          "note": "Applied at the arm tip with the root fully fixed, this is the load case for the static and topology studies."
+        },
+        {
+          "title": "Root bending stress",
+          "description": "Treating the arm as a cantilever of length L, the bending moment is largest at the root, where the bending stress sigma depends on the moment M, the distance to the outer fibre c, and the second moment of area I.",
+          "equation": "\\sigma = \\frac{M\\,c}{I} = \\frac{F_{tip}\\,L\\,c}{I}",
+          "result": "\\sigma_{root} \\approx 41\\ \\text{MPa} \\ll \\sigma_{y}",
+          "note": "Comfortably below the matrix yield strength, so the arm is stiffness- and resonance-driven rather than strength-driven."
+        },
+        {
+          "title": "First natural frequency vs. propeller excitation",
+          "description": "The modal study reports the first natural frequency f_1. I compare it to the propeller passing frequency f_p (blade count times rotational speed) to confirm a safe separation margin.",
+          "equation": "f_p = \\frac{N_{blades}\\,\\cdot\\,\\text{RPM}}{60}, \\qquad \\text{margin} = \\frac{f_1 - f_p}{f_p}",
+          "result": "f_1 \\approx 96\\ \\text{Hz} \\;\\;\\text{vs}\\;\\; f_p \\approx 60\\ \\text{Hz} \\Rightarrow \\text{margin} \\approx 60\\%",
+          "note": "A 60% separation between the first mode and the propeller excitation keeps the arm well away from resonance across the throttle range."
+        }
+      ],
+      "images": [
+        {
+          "src": "assets/img/projects/arm-cover.svg",
+          "alt": "Render of the topology-optimised quadcopter arm showing the organic hollow tapered structure between the hub and the motor mount.",
+          "caption": "The final arm, rebuilt in SOLIDWORKS from the optimised result. The hollow taper follows the bending-moment diagram."
+        },
+        {
+          "src": "assets/img/projects/arm-topology.svg",
+          "alt": "Ansys topology optimisation result showing retained material in red and removed material in blue across the design envelope.",
+          "caption": "Raw Ansys topology result. Red is load-bearing material the solver kept; the rest was removed to hit the 35% mass target."
+        }
+      ],
+      "model": "",
+      "files": [
+        {
+          "label": "Quadcopter arm — SOLIDWORKS part (.SLDPRT)",
+          "category": "SOLIDWORKS",
+          "size": "6.7 MB",
+          "url": "https://github.com/REPLACE_ME/REPLACE_ME/releases/download/v1.0/quadcopter-arm.SLDPRT"
+        },
+        {
+          "label": "Topology optimisation — Ansys archive (.wbpz)",
+          "category": "Ansys",
+          "size": "74 MB",
+          "url": "https://github.com/REPLACE_ME/REPLACE_ME/releases/download/v1.0/quadcopter-arm-topology.wbpz"
+        },
+        {
+          "label": "Modal analysis — Ansys archive (.wbpz)",
+          "category": "Ansys",
+          "size": "61 MB",
+          "url": "https://github.com/REPLACE_ME/REPLACE_ME/releases/download/v1.0/quadcopter-arm-modal.wbpz"
+        }
+      ]
+    }
+  ]
+}

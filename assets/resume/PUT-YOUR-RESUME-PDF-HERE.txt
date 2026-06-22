@@ -1,0 +1,15 @@
+PUT YOUR RÉSUMÉ PDF IN THIS FOLDER
+==================================
+
+1. Export your CV as a PDF.
+2. Rename it exactly:  Ananth-Bandari-Resume.pdf
+3. Drop it in this folder (assets/resume/).
+4. You can then delete this .txt file.
+
+The "Download résumé (PDF)" button on the Résumé page already points to:
+    assets/resume/Ananth-Bandari-Resume.pdf
+
+If you use a different file name, update the link in resume.html
+(search that file for "Ananth-Bandari-Resume.pdf" and change it).
+
+Keep the PDF reasonably small (ideally under ~2 MB) so the page stays fast.
