@@ -83,9 +83,9 @@ Each is harmless if you skip it — the site still works — but do them for a p
 
 - [ ] **Résumé PDF.** Save your CV as `assets/resume/Ananth-Bandari-Resume.pdf`
       (then delete `assets/resume/PUT-YOUR-RESUME-PDF-HERE.txt`).
-- [ ] **GitHub profile link.** In every `.html` file, replace
-      `https://github.com/your-username` with your real GitHub URL.
-      (Tip: use your editor’s “Find in all files”.)
+- [x] **GitHub profile link — already done.** The footer links point to
+      `https://github.com/ananthkbandari`. Change it only if you want a
+      different profile URL.
 - [ ] **Your photo.** Replace `assets/img/profile.svg` with a real square photo
       (e.g. `profile.jpg`) and update the `<img src="...">` in `index.html`.
 - [x] **Social-share image — already done.** A ready `assets/img/og-image.png`
@@ -166,7 +166,7 @@ git init
 git add .
 git commit -m "Initial portfolio site"
 git branch -M main
-git remote add origin https://github.com/YOUR-USERNAME/portfolio.git
+git remote add origin https://github.com/ananthkbandari/portfolio.git
 git push -u origin main
 ```
 
@@ -176,7 +176,7 @@ git push -u origin main
 2. Under **Build and deployment → Source**, choose **“Deploy from a branch.”**
 3. Branch: **`main`**, folder: **`/ (root)`**. Click **Save**.
 4. Wait ~1 minute. The page shows a link like
-   `https://YOUR-USERNAME.github.io/portfolio/`. Open it — your site is live. 🎉
+   `https://ananthkbandari.github.io/portfolio/`. Open it — your site is live. 🎉
 
 > If images/styles look broken on `username.github.io/portfolio/`, don’t worry —
 > that’s because the site expects to live at the **root** of a domain. Once you
@@ -200,9 +200,9 @@ records. There are two groups: one **CNAME** for `www`, and four **A** + four
 
 | Type  | Name (Host) | Value (Target)            |
 | ----- | ----------- | ------------------------- |
-| CNAME | `www`       | `YOUR-USERNAME.github.io` |
+| CNAME | `www`       | `ananthkbandari.github.io` |
 
-> Replace `YOUR-USERNAME` with your GitHub username. Note: **no `https://`,
+> Replace `ananthkbandari` with your GitHub username. Note: **no `https://`,
 > no trailing slash** — just `yourusername.github.io`.
 
 **For the apex/root `ananthbandari.bio` → A records (IPv4):**
@@ -228,7 +228,7 @@ records. There are two groups: one **CNAME** for `www`, and four **A** + four
 > them to “DNS only” (grey cloud, not orange)** at first so GitHub can issue your
 > HTTPS certificate. Cloudflare also supports a CNAME on the apex (“CNAME
 > flattening”), so instead of the A/AAAA rows you may add a single
-> `CNAME  @  →  YOUR-USERNAME.github.io`. Once HTTPS works you can switch the
+> `CNAME  @  →  ananthkbandari.github.io`. Once HTTPS works you can switch the
 > cloud to orange with SSL mode **Full (strict)** if you want Cloudflare’s CDN.
 
 ### 5.2 Tell GitHub the custom domain
@@ -272,7 +272,7 @@ into it — so your site stays small and fast.
    link address.”** It looks like:
 
    ```
-   https://github.com/YOUR-USERNAME/portfolio/releases/download/v1.0/go-kart-knuckle.SLDPRT
+   https://github.com/ananthkbandari/portfolio/releases/download/v1.0/go-kart-knuckle.SLDPRT
    ```
 
 7. Paste that URL into the matching `"url"` field in `data/projects.json`
