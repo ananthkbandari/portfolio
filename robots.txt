@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Point crawlers at the sitemap.
-Sitemap: https://www.ananthbandari.bio/sitemap.xml
+Sitemap: https://www.ananthkbandari.com/sitemap.xml

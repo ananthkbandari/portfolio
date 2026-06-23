@@ -23,7 +23,7 @@ calculations, renders, and **downloadable source files** for every project.
 2. [Before you go live — a 5-minute checklist](#2-before-you-go-live--a-5-minute-checklist)
 3. [Run the site on your own computer](#3-run-the-site-on-your-own-computer)
 4. [Put it on the internet (GitHub Pages)](#4-put-it-on-the-internet-github-pages)
-5. [Point www.ananthbandari.bio at it (custom domain + HTTPS)](#5-point-wwwananthbandaribio-at-it-custom-domain--https)
+5. [Point www.ananthkbandari.com at it (custom domain + HTTPS)](#5-point-wwwananthkbandaricom-at-it-custom-domain--https)
 6. [Upload big files to a GitHub Release and get their URLs](#6-upload-big-files-to-a-github-release-and-get-their-urls)
 7. [Cloudflare R2 (only for files over 2 GB)](#7-cloudflare-r2-only-for-files-over-2-gb)
 8. [Add a new project (the repeatable routine)](#8-add-a-new-project-the-repeatable-routine)
@@ -65,7 +65,7 @@ Portfolio Website/
 │   ├── models/             # OPTIONAL .glb 3D models (see assets/models/README.txt)
 │   └── resume/             # Put Ananth-Bandari-Resume.pdf here
 │
-├── CNAME                   # Tells GitHub Pages your domain is www.ananthbandari.bio
+├── CNAME                   # Tells GitHub Pages your domain is www.ananthkbandari.com
 ├── .nojekyll               # Tells GitHub Pages to serve files as-is (no Jekyll)
 ├── .gitignore              # Stops huge CAD/FEA files being committed by accident
 ├── robots.txt              # Lets search engines in; points to the sitemap
@@ -184,11 +184,11 @@ git push -u origin main
 
 ---
 
-## 5. Point www.ananthbandari.bio at it (custom domain + HTTPS)
+## 5. Point www.ananthkbandari.com at it (custom domain + HTTPS)
 
-You own `ananthbandari.bio`. We’ll make **`www.ananthbandari.bio`** the main
-address and have the bare `ananthbandari.bio` redirect to it. The `CNAME` file in
-this repo already contains `www.ananthbandari.bio`, so GitHub knows your domain.
+You own `ananthkbandari.com`. We’ll make **`www.ananthkbandari.com`** the main
+address and have the bare `ananthkbandari.com` redirect to it. The `CNAME` file in
+this repo already contains `www.ananthkbandari.com`, so GitHub knows your domain.
 
 ### 5.1 Add DNS records at your domain registrar
 
@@ -205,7 +205,7 @@ records. There are two groups: one **CNAME** for `www`, and four **A** + four
 > Replace `ananthkbandari` with your GitHub username. Note: **no `https://`,
 > no trailing slash** — just `yourusername.github.io`.
 
-**For the apex/root `ananthbandari.bio` → A records (IPv4):**
+**For the apex/root `ananthkbandari.com` → A records (IPv4):**
 
 | Type | Name (Host)   | Value             |
 | ---- | ------------- | ----------------- |
@@ -224,7 +224,7 @@ records. There are two groups: one **CNAME** for `www`, and four **A** + four
 | AAAA | `@`         | `2606:50c0:8003::153`   |
 
 > **Using Cloudflare for DNS?** (You will have a Cloudflare account if you use R2.)
-> You can manage `ananthbandari.bio`’s DNS there. Add the same records, **but set
+> You can manage `ananthkbandari.com`’s DNS there. Add the same records, **but set
 > them to “DNS only” (grey cloud, not orange)** at first so GitHub can issue your
 > HTTPS certificate. Cloudflare also supports a CNAME on the apex (“CNAME
 > flattening”), so instead of the A/AAAA rows you may add a single
@@ -234,7 +234,7 @@ records. There are two groups: one **CNAME** for `www`, and four **A** + four
 ### 5.2 Tell GitHub the custom domain
 
 1. Repo **Settings → Pages → Custom domain**.
-2. Enter **`www.ananthbandari.bio`** and click **Save**.
+2. Enter **`www.ananthkbandari.com`** and click **Save**.
    (This matches the `CNAME` file already in the repo.)
 3. GitHub runs a DNS check. It can take anywhere from a few minutes to ~24 hours
    for DNS to propagate — be patient if it’s not instant.
@@ -247,8 +247,8 @@ records. There are two groups: one **CNAME** for `www`, and four **A** + four
 2. When the **“Enforce HTTPS”** checkbox on the Pages settings becomes available,
    **tick it**. Now visitors always get the secure `https://` version.
 
-That’s it. `https://www.ananthbandari.bio` serves your site, and
-`ananthbandari.bio` redirects to it.
+That’s it. `https://www.ananthkbandari.com` serves your site, and
+`ananthkbandari.com` redirects to it.
 
 ---
 
@@ -313,11 +313,11 @@ Pick **one** of these:
    `https://pub-abc123.r2.dev/quadcopter-arm-topology.wbpz`.
 4. Paste it into the `"url"` field in `projects.json`.
 
-**B) Nicer — a custom domain (e.g. `files.ananthbandari.bio`):**
+**B) Nicer — a custom domain (e.g. `files.ananthkbandari.com`):**
 1. Bucket → **Settings → Custom Domains → Connect Domain.**
-2. Enter a subdomain like `files.ananthbandari.bio`. Cloudflare adds the DNS
+2. Enter a subdomain like `files.ananthkbandari.com`. Cloudflare adds the DNS
    record for you (your domain must be on Cloudflare DNS for this).
-3. Your stable URLs become `https://files.ananthbandari.bio/your-file.wbpz`.
+3. Your stable URLs become `https://files.ananthkbandari.com/your-file.wbpz`.
 
 ### 7.4 Turn on usage alerts (so you’re never surprised)
 
@@ -532,7 +532,7 @@ cloud)** while the certificate is issued.
 
 **Images don’t show on `username.github.io/portfolio/` but the site otherwise works.**
 Expected before the custom domain is attached — the site is built to live at a
-domain root. It resolves once `www.ananthbandari.bio` is connected.
+domain root. It resolves once `www.ananthkbandari.com` is connected.
 
 ---
 
